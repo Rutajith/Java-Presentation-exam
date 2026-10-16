@@ -1,0 +1,23 @@
+import java.util.Scanner;
+
+class FarmerMarketModule1{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        double price, quantity, total;
+        final double TAX = 0.05;
+
+        System.out.print("Enter price per kg: ");
+        price = sc.nextDouble();
+
+        System.out.print("Enter quantity: ");
+        quantity = sc.nextDouble();
+
+        total = price * quantity;
+        double tax = total * TAX;
+        double finalAmount = total + tax;
+
+        System.out.printf("Total: %.2f%n", total);
+        System.out.printf("Final Amount: %.2f%n", finalAmount);
+    }
+}

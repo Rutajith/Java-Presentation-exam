@@ -1,0 +1,117 @@
+
+import java.util.*;
+import java.nio.file.*;
+import java.io.IOException;
+import java.util.stream.Collectors;
+
+class Product {
+    private String name;
+    private double price;
+    private int quantity;
+
+    Product(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    double getPrice() {
+        return price;
+    }
+
+    int getQuantity() {
+        return quantity;
+    }
+
+    double getTotal() {
+        return price * quantity;
+    }
+
+    public String toString() {
+        return name + " - Rs. " + getTotal();
+    }
+}
+
+public class FarmersMarketCombined {
+
+    static int countProducts(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        return 1 + countProducts(n - 1);
+    }
+
+    public static void main(String[] args) {
+        final double TAX = 0.05;
+
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(new Product("Tomato", 40, 30));
+        products.add(new Product("Potato", 30, 10));
+        products.add(new Product("Carrot", 50, 4));
+
+        double totalSales = 0;
+        StringBuilder report = new StringBuilder();
+
+        report.append("FARMERS MARKET REPORT\n");
+
+        products.sort(
+            Comparator.comparing(Product::getName)
+        );
+
+        for (Product p : products) {
+            double amount = p.getTotal();
+            double finalAmount = amount + amount * TAX;
+            totalSales += amount;
+
+            String saleType = amount >= 1000
+                ? "Bulk Sale" : "Regular Sale";
+
+            System.out.println(p.getName());
+            System.out.println("Amount: Rs. " + amount);
+            System.out.println("With Tax: Rs. " + finalAmount);
+            System.out.println(saleType);
+
+            report.append(p.getName())
+                  .append(": Rs. ")
+                  .append(finalAmount)
+                  .append(" (")
+                  .append(saleType)
+                  .append(")\n");
+        }
+
+        double average = products.stream()
+            .mapToDouble(Product::getTotal)
+            .average()
+            .orElse(0);
+
+        List<String> bulkProducts = products.stream()
+            .filter(p -> p.getTotal() >= 1000)
+            .map(Product::getName)
+            .collect(Collectors.toList());
+
+        System.out.println("Total Sales: Rs. " + totalSales);
+        System.out.println("Average Sale: Rs. " + average);
+        System.out.println("Product Count: " +
+                           countProducts(products.size()));
+        System.out.println("Bulk Products: " + bulkProducts);
+
+        report.append("Total Sales: Rs. ")
+              .append(totalSales)
+              .append("\nAverage Sale: Rs. ")
+              .append(average);
+
+        try {
+            Files.writeString(
+                Path.of("market_report.txt"),
+                report.toString()
+            );
+            System.out.println("Report saved successfully");
+        } catch (IOException e) {
+            System.out.println("Unable to save report");
+        }
+    }
+}

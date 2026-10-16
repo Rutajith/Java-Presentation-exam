@@ -1,0 +1,43 @@
+
+public class CO3Tracker {
+
+    static int sum(int[] sales) {
+        int total = 0;
+
+        for (int amount : sales) {
+            total += amount;
+        }
+
+        return total;
+    }
+
+    static void display(String item) {
+        System.out.println("Item: " + item);
+    }
+
+    static void display(String item, int price) {
+        System.out.println(item + " = Rs. " + price);
+    }
+
+    static int count(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        return 1 + count(n - 1);
+    }
+
+    public static void main(String[] args) {
+        int[] sales = {500, 700, 300};
+
+        display("Tomato");
+        display("Potato", 40);
+
+        int total = sum(sales);
+        double average = (double) total / sales.length;
+
+        System.out.println("Total Sales: Rs. " + total);
+        System.out.println("Average Sales: Rs. " + average);
+        System.out.println("Number of Sales: " +
+                           count(sales.length));
+    }
+}

@@ -1,0 +1,29 @@
+class FarmerMarketModule2{
+    public static void main(String[] args) {
+        double sales = 2500;
+
+        if (sales >= 2000)
+            System.out.println("Good Sales");
+        else
+            System.out.println("Low Sales");
+
+        int choice = 2;
+
+        switch (choice) {
+            case 1: System.out.println("Vegetables"); break;
+            case 2: System.out.println("Fruits"); break;
+            default: System.out.println("Other");
+        }
+
+        for (int i = 1; i <= 3; i++) {
+            if (i == 2) continue;
+            System.out.println("Sale " + i);
+        }
+
+        int count = 1;
+        while (count <= 2) {
+            System.out.println("Checking stock...");
+            count++;
+        }
+    }
+}

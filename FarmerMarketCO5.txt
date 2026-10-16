@@ -1,0 +1,46 @@
+
+import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
+
+public class CO5Tracker {
+    public static void main(String[] args) {
+        String record = "Ravi,Tomato,40,5";
+        String[] data = record.split(",");
+
+        String farmer = data[0];
+        String item = data[1];
+        double price = Double.parseDouble(data[2]);
+        int quantity = Integer.parseInt(data[3]);
+
+        String[] items = {"Tomato", "Carrot", "Potato"};
+        Arrays.sort(items);
+
+        System.out.println("Farmer: " + farmer);
+        System.out.println("Item: " + item);
+        System.out.println("Total: Rs. " + (price * quantity));
+        System.out.println("Items: " + Arrays.toString(items));
+        System.out.println("Tomato matches: " +
+                           item.equals("Tomato"));
+        System.out.println("Potato index: " +
+                           Arrays.binarySearch(items, "Potato"));
+
+        Path file = Path.of("market.txt");
+
+        try {
+            String report = "Farmer: " + farmer +
+                "\nItem: " + item +
+                "\nTotal Sales: Rs. " + (price * quantity);
+
+            Files.writeString(file, report);
+            String savedReport = Files.readString(file);
+
+            System.out.println("Report saved successfully");
+            System.out.println(savedReport);
+
+        } catch (IOException e) {
+            System.out.println("File error: " + e.getMessage());
+        }
+    }
+}

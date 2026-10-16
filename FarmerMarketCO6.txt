@@ -1,0 +1,44 @@
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class CO6Tracker {
+    public static void main(String[] args) {
+        ArrayList<String> items = new ArrayList<>();
+        items.add("Tomato");
+        items.add("Potato");
+        items.add("Carrot");
+
+        HashMap<String, Integer> sales = new HashMap<>();
+        sales.put("Tomato", 1500);
+        sales.put("Potato", 800);
+        sales.put("Carrot", 1200);
+
+        System.out.println("Market Items: " + items);
+
+        System.out.println("Sales above Rs. 1000:");
+        sales.entrySet().stream()
+            .filter(e -> e.getValue() > 1000)
+            .sorted(Map.Entry.comparingByKey())
+            .forEach(e -> System.out.println(
+                e.getKey() + " = Rs. " + e.getValue()
+            ));
+
+        int total = sales.values().stream()
+            .mapToInt(Integer::intValue)
+            .sum();
+
+        Map<String, Long> categories =
+            sales.keySet().stream()
+                .collect(Collectors.groupingBy(
+                    item -> item,
+                    Collectors.counting()
+                ));
+
+        System.out.println("Total Sales: Rs. " + total);
+        System.out.println("Item Count: " + items.size());
+        System.out.println("Report: " + categories);
+    }
+}

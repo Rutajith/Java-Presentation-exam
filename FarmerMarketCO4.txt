@@ -1,0 +1,48 @@
+
+class Farmer {
+    private String name;
+    private String item;
+    private double price;
+
+    Farmer(String name, String item, double price) {
+        this.name = name;
+        this.item = item;
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String toString() {
+        return name + " sells " + item;
+    }
+}
+
+public class CO4Tracker {
+    public static void main(String[] args) {
+        Farmer f = new Farmer("Ravi", "Tomato", 40);
+
+        System.out.println(f);
+        System.out.println("Price per kg: Rs. " + f.getPrice());
+
+        try {
+            int quantity = 5;
+
+            if (quantity <= 0) {
+                throw new IllegalArgumentException(
+                    "Quantity must be positive");
+            }
+
+            double total = f.getPrice() * quantity;
+            System.out.println("Total Sales: Rs. " + total);
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
